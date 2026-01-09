@@ -1,1 +1,95 @@
+#Task 1: Unix Commands & Log Analysis
+Situation
+You joined a company as a Software Intern. Your senior asks you to analyze application logs stored on a Linux server.
+Tasks:
+Navigate to /var/log/app.
+List all files (including hidden) with readable sizes.
+Show the last 20 lines of error.log.
+Search for the word “error” (case-insensitive) in all .log files.
+Save the output to error_report.txt.
+
+
+#Task 1
+
+pragati_kavra@Pragati:/mnt/c/Users/91766$ cd /var/log/app
+-bash: cd: /var/log/app: No such file or directory
+pragati_kavra@Pragati:/mnt/c/Users/91766$ ls /var/log
+README            dmesg       faillog         syslog
+alternatives.log  dmesg.0     fontconfig.log  ubuntu-advantage-apt-hook.log
+apt               dmesg.1.gz  journal         unattended-upgrades
+auth.log          dmesg.2.gz  kern.log        wtmp
+bootstrap.log     dmesg.3.gz  landscape
+btmp              dmesg.4.gz  lastlog
+dist-upgrade      dpkg.log    private
+pragati_kavra@Pragati:/mnt/c/Users/91766$ tail -n 20 /var/log/syslog
+2026-01-08T20:01:18.342311+00:00 Pragati systemd[1]: Started user@1000.service - User Manager for UID 1000.
+2026-01-08T20:01:18.344969+00:00 Pragati systemd[1]: Started session-1.scope - Session 1 of User pragati_kavra.
+2026-01-08T20:01:18.395891+00:00 Pragati systemd[386]: Finished wslg-session.service - WSLg user service.
+2026-01-08T20:01:18.396121+00:00 Pragati systemd[386]: Startup finished in 390ms.
+2026-01-08T20:01:19.579651+00:00 Pragati wsl-pro-service[201]: #033[33mWARNING#033[0m Daemon: could not connect to Windows Agent: could not get address: could not read agent port file "/mnt/c/Users/91766/.ubuntupro/.address": open /mnt/c/Users/91766/.ubuntupro/.address: no such file or directory
+2026-01-08T20:01:20.391837+00:00 Pragati snapd[192]: daemon.go:556: gracefully waiting for running hooks
+2026-01-08T20:01:20.392068+00:00 Pragati snapd[192]: daemon.go:558: done waiting for running hooks
+2026-01-08T20:01:23.395995+00:00 Pragati snapd[192]: overlord.go:532: Released state lock file
+2026-01-08T20:01:23.396167+00:00 Pragati snapd[192]: daemon stop requested to wait for socket activation
+2026-01-08T20:01:23.407075+00:00 Pragati systemd[1]: snapd.service: Deactivated successfully.
+2026-01-08T20:01:23.584662+00:00 Pragati wsl-pro-service[201]: #033[33mWARNING#033[0m Daemon: could not connect to Windows Agent: could not get address: could not read agent port file "/mnt/c/Users/91766/.ubuntupro/.address": open /mnt/c/Users/91766/.ubuntupro/.address: no such file or directory
+2026-01-08T20:01:25.236343+00:00 Pragati systemd-timesyncd[139]: Timed out waiting for reply from 185.125.190.56:123 (ntp.ubuntu.com).
+2026-01-08T20:01:31.594405+00:00 Pragati wsl-pro-service[201]: #033[33mWARNING#033[0m Daemon: could not connect to Windows Agent: could not get address: could not read agent port file "/mnt/c/Users/91766/.ubuntupro/.address": open /mnt/c/Users/91766/.ubuntupro/.address: no such file or directory
+2026-01-08T20:01:35.488278+00:00 Pragati systemd-timesyncd[139]: Timed out waiting for reply from 185.125.190.57:123 (ntp.ubuntu.com).
+2026-01-08T20:01:45.648085+00:00 Pragati systemd[1]: systemd-timedated.service: Deactivated successfully.
+2026-01-08T20:01:45.728056+00:00 Pragati systemd-timesyncd[139]: Timed out waiting for reply from 91.189.91.157:123 (ntp.ubuntu.com).
+2026-01-08T20:01:47.612003+00:00 Pragati wsl-pro-service[201]: #033[33mWARNING#033[0m Daemon: could not connect to Windows Agent: could not get address: could not read agent port file "/mnt/c/Users/91766/.ubuntupro/.address": open /mnt/c/Users/91766/.ubuntupro/.address: no such file or directory
+2026-01-08T20:01:53.975633+00:00 Pragati kernel: hv_balloon: Max. dynamic memory size: 3758 MB
+2026-01-08T20:01:55.977810+00:00 Pragati systemd-timesyncd[139]: Timed out waiting for reply from 185.125.190.58:123 (ntp.ubuntu.com).
+2026-01-08T20:02:19.646079+00:00 Pragati wsl-pro-service[201]: #033[33mWARNING#033[0m Daemon: could not connect to Windows Agent: could not get address: could not read agent port file "/mnt/c/Users/91766/.ubuntupro/.address": open /mnt/c/Users/91766/.ubuntupro/.address: no such file or directory
+pragati_kavra@Pragati:/mnt/c/Users/91766$ sudo mkdir -p /var/log/app
+[sudo] password for pragati_kavra:
+pragati_kavra@Pragati:/mnt/c/Users/91766$ sudo touch /var/log/app/error.log
+sudo touch /var/log/app/app.log
+pragati_kavra@Pragati:/mnt/c/Users/91766$ echo "ERROR: Database connection failed" | sudo tee -a /var/log/app/error.log
+echo "Info: Application started" | sudo tee -a /var/log/app/app.log
+echo "warning: low memory" | sudo tee -a /var/log/app/app.log
+echo "Error: timeout occurred" | sudo tee -a /var/log/app/error.log
+ERROR: Database connection failed
+Info: Application started
+warning: low memory
+Error: timeout occurred
+pragati_kavra@Pragati:/mnt/c/Users/91766$ cd /var/log/app
+ls -lah
+tail -n 20 error.log
+grep -in "error" *.log > error_report.txt
+cat error_report.txt
+total 16K
+drwxr-xr-x 2 root root   4.0K Jan  8 20:02 .
+drwxrwxr-x 9 root syslog 4.0K Jan  8 20:02 ..
+-rw-r--r-- 1 root root     46 Jan  8 20:02 app.log
+-rw-r--r-- 1 root root     58 Jan  8 20:02 error.log
+ERROR: Database connection failed
+Error: timeout occurred
+-bash: error_report.txt: Permission denied
+cat: error_report.txt: No such file or directory
+pragati_kavra@Pragati:/var/log/app$ grep -in "error" *.log > error_report.txt
+-bash: error_report.txt: Permission denied
+pragati_kavra@Pragati:/var/log/app$ sudo grep -in "error" *.log > /var/log/app/error_report.txt
+-bash: /var/log/app/error_report.txt: Permission denied
+pragati_kavra@Pragati:/var/log/app$ sudo cat error_report.txt
+cat: error_report.txt: No such file or directory
+pragati_kavra@Pragati:/var/log/app$ sudo chown pragati_kavra:pragati_kavra /var/log/app
+pragati_kavra@Pragati:/var/log/app$ grep -in "error" *.log > error_report.txt
+cat error_report.txt
+error.log:1:ERROR: Database connection failed
+“The log directory was owned by root, so writing the report file required elevated privileges. I used sudo to generate error_report.txt securely.
+
+
+#Task 2: Git Basic Workflow & Undo Operations
+Situation
+You are working on a project and accidentally make mistakes while committing code.
+Tasks:
+Initialize a Git repository.
+Add README.md and commit it.
+Modify a file and check changes before committing.
+Unstage a file after adding it.
+Fix a wrong commit message.
+Revert a commit safely.
+
 
