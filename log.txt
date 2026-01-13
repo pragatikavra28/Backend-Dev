@@ -1,0 +1,5 @@
+1768281262357 - GET /
+1768281262445 - GET /favicon.ico
+13/1/2026, 11:42:13 am - GET / - Welcome to the Home Page
+13/1/2026, 11:42:17 am - GET /favicon.ico - 404 Page Not Found
+13/1/2026, 11:42:31 am - GET /contact - This is the Contact Page
