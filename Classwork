@@ -1,0 +1,206 @@
+#Task 1: Unix Commands & Log Analysis
+Situation
+You joined a company as a Software Intern. Your senior asks you to analyze application logs stored on a Linux server.
+Tasks:
+Navigate to /var/log/app.
+List all files (including hidden) with readable sizes.
+Show the last 20 lines of error.log.
+Search for the word “error” (case-insensitive) in all .log files.
+Save the output to error_report.txt.
+
+
+#Task 1
+
+pragati_kavra@Pragati:/mnt/c/Users/91766$ cd /var/log/app
+-bash: cd: /var/log/app: No such file or directory
+pragati_kavra@Pragati:/mnt/c/Users/91766$ ls /var/log
+README            dmesg       faillog         syslog
+alternatives.log  dmesg.0     fontconfig.log  ubuntu-advantage-apt-hook.log
+apt               dmesg.1.gz  journal         unattended-upgrades
+auth.log          dmesg.2.gz  kern.log        wtmp
+bootstrap.log     dmesg.3.gz  landscape
+btmp              dmesg.4.gz  lastlog
+dist-upgrade      dpkg.log    private
+pragati_kavra@Pragati:/mnt/c/Users/91766$ tail -n 20 /var/log/syslog
+2026-01-08T20:01:18.342311+00:00 Pragati systemd[1]: Started user@1000.service - User Manager for UID 1000.
+2026-01-08T20:01:18.344969+00:00 Pragati systemd[1]: Started session-1.scope - Session 1 of User pragati_kavra.
+2026-01-08T20:01:18.395891+00:00 Pragati systemd[386]: Finished wslg-session.service - WSLg user service.
+2026-01-08T20:01:18.396121+00:00 Pragati systemd[386]: Startup finished in 390ms.
+2026-01-08T20:01:19.579651+00:00 Pragati wsl-pro-service[201]: #033[33mWARNING#033[0m Daemon: could not connect to Windows Agent: could not get address: could not read agent port file "/mnt/c/Users/91766/.ubuntupro/.address": open /mnt/c/Users/91766/.ubuntupro/.address: no such file or directory
+2026-01-08T20:01:20.391837+00:00 Pragati snapd[192]: daemon.go:556: gracefully waiting for running hooks
+2026-01-08T20:01:20.392068+00:00 Pragati snapd[192]: daemon.go:558: done waiting for running hooks
+2026-01-08T20:01:23.395995+00:00 Pragati snapd[192]: overlord.go:532: Released state lock file
+2026-01-08T20:01:23.396167+00:00 Pragati snapd[192]: daemon stop requested to wait for socket activation
+2026-01-08T20:01:23.407075+00:00 Pragati systemd[1]: snapd.service: Deactivated successfully.
+2026-01-08T20:01:23.584662+00:00 Pragati wsl-pro-service[201]: #033[33mWARNING#033[0m Daemon: could not connect to Windows Agent: could not get address: could not read agent port file "/mnt/c/Users/91766/.ubuntupro/.address": open /mnt/c/Users/91766/.ubuntupro/.address: no such file or directory
+2026-01-08T20:01:25.236343+00:00 Pragati systemd-timesyncd[139]: Timed out waiting for reply from 185.125.190.56:123 (ntp.ubuntu.com).
+2026-01-08T20:01:31.594405+00:00 Pragati wsl-pro-service[201]: #033[33mWARNING#033[0m Daemon: could not connect to Windows Agent: could not get address: could not read agent port file "/mnt/c/Users/91766/.ubuntupro/.address": open /mnt/c/Users/91766/.ubuntupro/.address: no such file or directory
+2026-01-08T20:01:35.488278+00:00 Pragati systemd-timesyncd[139]: Timed out waiting for reply from 185.125.190.57:123 (ntp.ubuntu.com).
+2026-01-08T20:01:45.648085+00:00 Pragati systemd[1]: systemd-timedated.service: Deactivated successfully.
+2026-01-08T20:01:45.728056+00:00 Pragati systemd-timesyncd[139]: Timed out waiting for reply from 91.189.91.157:123 (ntp.ubuntu.com).
+2026-01-08T20:01:47.612003+00:00 Pragati wsl-pro-service[201]: #033[33mWARNING#033[0m Daemon: could not connect to Windows Agent: could not get address: could not read agent port file "/mnt/c/Users/91766/.ubuntupro/.address": open /mnt/c/Users/91766/.ubuntupro/.address: no such file or directory
+2026-01-08T20:01:53.975633+00:00 Pragati kernel: hv_balloon: Max. dynamic memory size: 3758 MB
+2026-01-08T20:01:55.977810+00:00 Pragati systemd-timesyncd[139]: Timed out waiting for reply from 185.125.190.58:123 (ntp.ubuntu.com).
+2026-01-08T20:02:19.646079+00:00 Pragati wsl-pro-service[201]: #033[33mWARNING#033[0m Daemon: could not connect to Windows Agent: could not get address: could not read agent port file "/mnt/c/Users/91766/.ubuntupro/.address": open /mnt/c/Users/91766/.ubuntupro/.address: no such file or directory
+pragati_kavra@Pragati:/mnt/c/Users/91766$ sudo mkdir -p /var/log/app
+[sudo] password for pragati_kavra:
+pragati_kavra@Pragati:/mnt/c/Users/91766$ sudo touch /var/log/app/error.log
+sudo touch /var/log/app/app.log
+pragati_kavra@Pragati:/mnt/c/Users/91766$ echo "ERROR: Database connection failed" | sudo tee -a /var/log/app/error.log
+echo "Info: Application started" | sudo tee -a /var/log/app/app.log
+echo "warning: low memory" | sudo tee -a /var/log/app/app.log
+echo "Error: timeout occurred" | sudo tee -a /var/log/app/error.log
+ERROR: Database connection failed
+Info: Application started
+warning: low memory
+Error: timeout occurred
+pragati_kavra@Pragati:/mnt/c/Users/91766$ cd /var/log/app
+ls -lah
+tail -n 20 error.log
+grep -in "error" *.log > error_report.txt
+cat error_report.txt
+total 16K
+drwxr-xr-x 2 root root   4.0K Jan  8 20:02 .
+drwxrwxr-x 9 root syslog 4.0K Jan  8 20:02 ..
+-rw-r--r-- 1 root root     46 Jan  8 20:02 app.log
+-rw-r--r-- 1 root root     58 Jan  8 20:02 error.log
+ERROR: Database connection failed
+Error: timeout occurred
+-bash: error_report.txt: Permission denied
+cat: error_report.txt: No such file or directory
+pragati_kavra@Pragati:/var/log/app$ grep -in "error" *.log > error_report.txt
+-bash: error_report.txt: Permission denied
+pragati_kavra@Pragati:/var/log/app$ sudo grep -in "error" *.log > /var/log/app/error_report.txt
+-bash: /var/log/app/error_report.txt: Permission denied
+pragati_kavra@Pragati:/var/log/app$ sudo cat error_report.txt
+cat: error_report.txt: No such file or directory
+pragati_kavra@Pragati:/var/log/app$ sudo chown pragati_kavra:pragati_kavra /var/log/app
+pragati_kavra@Pragati:/var/log/app$ grep -in "error" *.log > error_report.txt
+cat error_report.txt
+error.log:1:ERROR: Database connection failed
+“The log directory was owned by root, so writing the report file required elevated privileges. I used sudo to generate error_report.txt securely.
+
+
+#Task 2: Git Basic Workflow & Undo Operations
+Situation
+You are working on a project and accidentally make mistakes while committing code.
+Tasks:
+Initialize a Git repository.
+Add README.md and commit it.
+Modify a file and check changes before committing.
+Unstage a file after adding it.
+Fix a wrong commit message.
+Revert a commit safely.
+
+1. Initialize a Git Repository
+git init
+Initializes an empty Git repository in the current folder.
+2. Add README.md and Commit It
+touch README.md
+git add README.md
+git commit -m "Initial commit with README"
+
+Adds README.md to staging and commits it.
+3. Modify a File and Check Changes Before Committing
+echo "Project description" >> README.md
+git status
+git diff
+git status shows modified files
+git diff shows exact changes before commit
+4. Unstage a File After Adding It
+git add README.md
+git restore --staged README.md
+Removes the file from staging without deleting changes.
+git reset README.md
+
+5. Fix a Wrong Commit Message
+git commit --amend -m "Correct commit message"
+
+Updates the last commit message without creating a new commit.
+6. Revert a Commit Safely
+git log --oneline
+git revert <commit-hash>
+Creates a new commit that safely undoes the changes of the selected commit.
+
+Conclusion
+Git provides powerful undo commands such as restore, amend, and revert to fix mistakes without losing work, ensuring safe and controlled version management.
+
+
+#Task 3: Branching, Merging & Conflict Resolution
+Situation
+Two developers are working on the same file and a merge conflict occurs.
+Tasks:
+Create a branch feature-ui.
+Make changes and commit.
+Merge the branch into main.
+Simulate a merge conflict.
+Resolve the conflict manually and complete the merge.
+Explain why merge conflicts occur
+
+1. Create a Branch feature-ui
+git branch feature-ui
+git checkout feature-ui
+git checkout -b feature-ui
+Creates and switches to the feature-ui branch.
+
+2. Make Changes and Commit
+echo "UI feature added" >> app.txt
+git add app.txt
+git commit -m "Added UI feature"
+Changes are saved in the feature-ui branch.
+
+3. Merge the Branch into main
+git checkout main
+git merge feature-ui
+If no conflict exists, Git merges successfully.
+
+4. Simulate a Merge Conflict
+Step 1: Modify the Same File in main
+echo "Main branch update" >> app.txt
+git add app.txt
+git commit -m "Updated app in main branch"
+
+Step 2: Modify the Same Line in feature-ui
+git checkout feature-ui
+echo "Conflicting UI change" >> app.txt
+git add app.txt
+git commit -m "UI conflicting change"
+
+Step 3: Try to Merge
+git checkout main
+git merge feature-ui
+
+
+Git reports a merge conflict.
+
+5. Resolve the Conflict Manually
+
+Open app.txt:
+
+<<<<<<< HEAD
+Main branch update
+=======
+Conflicting UI change
+>>>>>>> feature-ui
+
+Edit the File Manually
+Main branch update
+Conflicting UI change
+
+Mark Conflict as Resolved
+git add app.txt
+git commit -m "Resolved merge conflict between main and feature-ui"
+Merge completed successfully.
+
+6. Why Do Merge Conflicts Occur?
+Merge conflicts occur when:
+Two branches modify the same line of a file
+One branch deletes a file while another modifies it
+Git cannot decide which change to keep automatically
+Git stops the merge process and asks the developer to manually resolve the conflict to avoid losing important changes.
+
+Conclusion
+Branching allows parallel development, while merging combines work. Merge conflicts are a natural part of collaborative development and can be resolved safely by manually reviewing and editing conflicting files.
+
+
+

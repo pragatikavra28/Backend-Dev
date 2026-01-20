@@ -1,0 +1,11 @@
+console.log("hello world");
+// console.log(window);
+const {add,sub, multiply, divide, modulus, exponent, floorDiv, max}=require ('./hello1');
+console.log(sub(10,5));
+console.log(add(10,5));
+console.log(multiply(10,5));
+console.log(divide(10,5));
+console.log(modulus(10,3));
+console.log(exponent(2,3));
+console.log(floorDiv(10,3));
+console.log(max(10,20));
