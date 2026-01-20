@@ -1,0 +1,6 @@
+Hello,GLA University
+Welcome to Node.js File System Module
+This is an example of Write Stream
+File write operation completed.
+pragati Kavra
+Im fiery
