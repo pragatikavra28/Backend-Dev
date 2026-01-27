@@ -1,0 +1,31 @@
+File System Assignment Theory Answers
+
+
+1. Difference between synchronous and asynchronous file operations:
+Synchronous operations block the program until the task is completed.
+Asynchronous operations do not block execution and run in the background.
+
+2. When should you use file streams instead of reading the entire file?
+File streams are used when files are large to save memory.
+
+3. Purpose of 'utf8' encoding parameter:
+'utf8' is used to read and write files as readable text instead of binary data.
+
+4. Common error codes in file system operations:
+ENOENT means file not found.
+EACCES means permission denied.
+EEXIST means file already exists.
+
+5. How to safely delete a directory with all its contents:
+First delete all files inside the directory and then delete the directory.
+
+6. Concept of piping in streams with example:
+Piping transfers data from one stream to another.
+Example: readStream.pipe(writeStream);
+
+7. Importance of handling errors in file operations:
+Error handling helps prevent program crashes and identify problems.
+
+8. Difference between writeFile and appendFile:
+writeFile overwrites the file.
+appendFile adds data at the end of the file.
