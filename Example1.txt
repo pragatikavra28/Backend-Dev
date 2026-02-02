@@ -1,0 +1,14 @@
+^5.2.1 = Express
+
+1st part = 5
+2nd part = 1
+3rd part = 2
+
+1:minor fixes (optional update)
+2:major fixes (mandatory update)
+3:security fixes (mandatory update)
+
+^ if we use this symbol = we are specifying a minimum version
+^ - Install all recommended and minor fixed automatically
+^ ~ Install only recommended fixes automatically    
+

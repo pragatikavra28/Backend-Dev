@@ -51,10 +51,52 @@
 
  //filecopy using pipe method from sample file to output file
  
-    const fs = require('fs');
-    const readStream = fs.createReadStream('./sample.txt');
-    const writeStream = fs.createWriteStream('./output.txt');
-    readStream.pipe(writeStream);
-    console.log('File copied successfully using pipe method.');
+   //  const fs = require('fs');
+   //  const readStream = fs.createReadStream('./sample.txt');
+   //  const writeStream = fs.createWriteStream('./output.txt');
+   //  readStream.pipe(writeStream);
+   //  console.log('File copied successfully using pipe method.');
 
-    
+    //Common Errors
+
+   //  ENOENT =FILE NOT FOUND ERROR
+   //  EACCES= PERMISSION DENIED ERROR
+   //  EEXIST= FILE ALREADY EXISTS ERROR
+   //  EISDIR= ILLEGAL OPERATION ON A DIRECTORY ERROR
+   //  EMFILE= TOO MANY OPEN FILES IN THE SYSTEM ERROR
+
+   //Error handling with callback
+ //   const fs = require('fs');
+ //   fs.readFile('./nonexistent.txt', 'utf8', (err, data) => {
+ //       if (err) {
+   //           console.error('Error reading file:', err.message);   
+   //           return;
+   //       }
+   //       console.log('File data:', data);
+   //   });
+
+   //Error handling with async/await
+
+   // const fsPromises = require('fs').promises;
+   // async function readFileAsync() {
+   //     try {
+   //         const data = await fsPromises.readFile('./nonexistent.txt', 'utf8');
+   //         console.log('File data:', data);
+   //     } catch (err) {
+   //         console.error('Error reading file:', err.message);
+   //     } 
+   // }  readFileAsync();
+
+   //Error handling with streams
+
+   const fs = require('fs');
+   const readStream = fs.createReadStream('./nonexistent.txt');
+   const writeStream = fs.createWriteStream('./output.txt');
+   readStream.on('error', (err) => {
+       console.error('Error reading file:', err.message);
+       WriteStream.destroy(); //stop further processing
+   });
+   writeStream.on('error', (err) => {
+       console.error('Error writing file:', err.message);
+         readStream.end(); //stop further processing // it will overwrite the previous line and make the output file empty.
+   });
