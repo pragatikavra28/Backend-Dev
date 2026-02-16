@@ -1,0 +1,40 @@
+<%- include("partials/header") %>
+
+<a href="/add-student">➕ Add Student</a>
+
+<h2>All Students</h2>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Marks</th>
+        <th>Grade</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+
+    <% students.forEach(student => { %>
+        <tr>
+            <td><%= student.id %></td>
+            <td><%= student.name %></td>
+            <td><%= student.marks %></td>
+            <td><%= student.grade %></td>
+
+            <td>
+                <% if(student.marks >= 40) { %>
+                    <span class="pass">Pass</span>
+                <% } else { %>
+                    <span class="fail">Fail</span>
+                <% } %>
+            </td>
+
+            <td>
+                <a href="/students/<%= student.id %>">View</a>
+            </td>
+        </tr>
+    <% }) %>
+
+</table>
+
+<%- include("partials/footer") %>
