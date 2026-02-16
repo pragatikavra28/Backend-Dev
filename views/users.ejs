@@ -1,0 +1,16 @@
+<%- include("partials/header") %>
+
+<h2>Users</h2>
+
+<form method="GET" action="/users">
+  <input type="text" name="name" placeholder="Search by name">
+  <button type="submit">Search</button>
+</form>
+
+<ul>
+  <% users.forEach(user => { %>
+    <li><%= user.name %></li>
+  <% }) %>
+</ul>
+
+<%- include("partials/footer") %>
